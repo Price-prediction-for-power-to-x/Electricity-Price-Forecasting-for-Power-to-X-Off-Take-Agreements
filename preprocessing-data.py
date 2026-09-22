@@ -80,6 +80,21 @@ df.loc[:72,'Min Total Load_DE']=df['Min Total Load'][73]
 df.loc[:72,'Max Total Load_DE']=df['Min Total Load'][73]
 df.loc[(df['month'] == 1) & (df['week'] != 1), 'week'] = 1
 
+def add_fourier_terms(df, time_col='hour', period=24, K=2, prefix='hour'):
+    """
+    Adds Fourier sin/cos terms for periodic features.
+    K controls how many harmonics to include (K=1..3 is typical).
+    """
+    df = df.copy()
+    for k in range(1, K+1):
+        df[f'{prefix}_sin_{k}'] = np.sin(2 * np.pi * k * df[time_col] / period)
+        df[f'{prefix}_cos_{k}'] = np.cos(2 * np.pi * k * df[time_col] / period)
+    return df
+
+df = add_fourier_terms(df, 'hour', period=24, K=2, prefix='hour')
+df = add_fourier_terms(df, 'weekday', period=7, K=2, prefix='weekday')
+
+
 #generating something like TMY file as input of solar and wind forecast
 
 import glob
@@ -155,3 +170,4 @@ for m in range(1, 13):  # loop through 12 calendar months
 
 tmy_data = pd.concat(representative_months).sort_values(['month', 'date']).reset_index(drop=True)
 
+df['total RE']= df['Wind offshore']+ df['Wind onshore']+ df['Solar']
