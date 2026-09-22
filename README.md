@@ -19,6 +19,4 @@ Year-ahead total load forecasts are available through the [ENTSO-E Transparency 
 
 For each bidding zone and each week of the following year, the year-ahead forecast provides **minimum and maximum total load values**. Thus, the dataset does not provide an hourly load profile; rather, it provides the forecasted weekly load range (minimum and maximum load) for the bidding zone. This is consistent with the ENTSO-E definition of the year-ahead total load forecast.
 
-For the Danish bidding zone, the relevant bidding-zone code is **10YDK-1--------W**.
-
 The ENTSO-E Transparency Platform also provides data through its web interface, API, and downloadable file extracts.
